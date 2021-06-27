@@ -1,0 +1,154 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+a,a:hover{
+    text-decoration: none;
+}
+ul,ol{
+    list-style-type: none;
+}
+.paddtop {
+    padding-top: 5px;
+}
+.kuai-1{
+    width:300px;
+}
+.kuai-2{
+    width:130px;
+    float: left;
+
+}
+.kuai-3{
+    width:130px;
+    float: right;
+}
+
+.kuai-4{
+    width:300px;
+}
+#back-color{
+    background-color: black;
+}
+#back-color img{
+    width: 100%;
+    height: 480px;
+    opacity: .32;
+    object-fit: cover;
+}
+#main_schedule{
+    position: static;
+
+}
+
+.op-1{
+    position: relative;
+
+}
+.op-2{
+    width: 100%;
+    position: absolute;
+    top:60px;
+    color:white;
+}
+/*电影列表*/
+#mov_sch_list{
+    border: 7px solid #000;
+    border-radius: 20px;
+}
+#studio{
+    font-size: 14px;
+}
+
+
+.brief p{
+    font-family:"黑体";
+    text-indent: 45px;
+    letter-spacing: 2px;
+    line-height:1.8;
+    font-size: 20px;
+    position: relative;
+    top:50px;
+}
+.message{
+    color:#555555;
+}
+.message li{
+    color:#aaa;
+
+    list-style: none;
+}
+.message li a{
+    text-decoration:none;
+    color:#aaa;
+}
+.message a:hover{
+    color:aqua;
+}
+
+
+
+
+
+
+header{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    padding: 0 100px;
+    background: #000;
+    display: flex;
+    /*justify-content: flex-end;*/
+    align-items: center;
+    transition: .7s;
+}
+header.sticky{
+    position: fixed;
+    height: 80px;
+}
+header .banner{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: .7s;
+}
+header.sticky .banner{
+    opacity: 0.5;
+}
+header .logo{
+    position: absolute;
+    top: 47%;
+    left: 30%;
+    transform: translate(-50%,-50%);
+    font-size: 7.5vw;
+    color: #fff;
+    font-weight: 700;
+    transition: .7s;
+    text-decoration: none;
+    z-index: 1;
+}
+header.sticky .logo{
+    position: absolute;
+    font-size: 2em;
+    left: 100px;
+    transform: translate(0,-50%);
+}
+
+
+section{
+    position: absolute;
+    margin-top: 80px;
+    width: 100%;
+    z-index: -1;
+}
+section h2{
+    font-size: 3em;
+}
+section p{
+    font-size: 1.2em;
+}

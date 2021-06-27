@@ -1,0 +1,59 @@
+ul,ol{
+    list-style-type: none;
+}
+a,a:hover{
+    text-decoration: none;
+}
+.name {
+    font-size: 20px;
+    margin: 10px auto;
+}
+.nav_left{
+    height: 500px;
+}
+.sidebar-sticky ul li{
+    border-radius: 5px;
+    margin: 1px;
+}
+.sidebar-sticky ul li a{
+    font-size: 17px;
+    color: black;
+}
+
+.navbar-toggler{
+    top: .25rem;
+    right: 1rem;
+}
+.sidebar-sticky ul li a:hover{
+    color: #eee;
+}
+.sidebar-sticky ul li:hover{
+    background-color: #333;
+}
+#active_index{
+    background-color: #333;
+}
+#active_index a{
+    color: #eee;
+}
+#vue{
+    margin-top: 55%;
+    height: 30%;
+    border-radius: 10px;
+}
+#vue .weather_name{
+    font-size: 18px;
+}
+.weather_name span{
+    font-size: 20px;
+}
+.weather_list{
+    margin-left: -30px;
+}
+#sidebarMenu{
+    height: 1020px;
+    z-index: 1;
+}
+.sidebar-sticky{
+    height: 1020px;
+}

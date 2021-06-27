@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="js/Bootstrap/jquery.js" ></script>
+
+    <title>123</title>
+    <link rel="stylesheet" href="css/Bootstrap/bootstrap.min.css">
+
+</head>
+
+<body>
+<input type="text" id="input">
+<button type="button" id="post1" onclick="search1()">search1</button>
+<button type="button" id="post2" onclick="search2()">search2</button>
+
+<table class="table table-hover">
+    <thead>
+    <tr class="list_nav">
+        <th>电影编号</th>
+        <th>电影名称</th>
+        <th>类别</th>
+        <th>电影时长</th>
+        <th>票价</th>
+        <th>图片url</th>
+        <th>背景图片url</th>
+    </tr>
+    </thead>
+    <tbody id="table">
+    </tbody>
+</table>
+
+<div id="search2">
+    <div>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+        <p></p>
+    </div>
+</div>
+
+<form id="myform">
+    <div class="input-group mb-3">
+    <div class="input-group-prepend">
+        <label class="input-group-text" for="inputGroupSelect01">影厅编号</label>
+    </div>
+    <select class="custom-select" id="inputGroupSelect01" name="inputGroupSelect02">
+    </select>
+</div>
+</form>
+
+
+
+
+<button type="button" id="select">选择</button>
+
+<a class="btn btn-sm btn-primary" data-toggle="modal" data-target="#delModal" >购票</a>
+
+<span id="price">价格</span>
+
+<a href="customer_seat_ticket.html?type=search&schedid=' + json[i].schedid + '"><input type="button" class="btn btn-sm btn-primary" value="购票"></a>
+
+<a href="customer_seat_ticket.html?type=search&schedid=' + json[i].schedid + '" class="btn btn-sm btn-primary">购票</a>
+
+<form id="form" method="post" enctype="multipart/form-data">
+    <input type="file" id="input1">
+</form>
+<button id="button">获取内容</button>
+<p id="file_path"></p>
+
+
+
+
+
+<script src="js/Bootstrap/jquery.js"></script>
+<script src="js/Bootstrap/bootstrap.min.js"></script>
+<!--axios-->
+<script src="js/axios.min.js"></script>
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="js/vue.min.js"></script>
+<script type="text/javascript">
+
+    var form = document.getElementById("myform");
+
+    document.getElementById("inputGroupSelect01").innerHTML = '<option id="selected" selected="">请选择</option><option value="123-421">1234-5341</option>';
+
+    var arr = document.getElementById("inputGroupSelect01").value.split("-")[0];
+
+
+
+
+    document.getElementById("button").onclick = function (){
+        var input1 = document.getElementById("input1").value;
+        document.getElementById("file_path").innerText = input1;
+    }
+
+    document.getElementById("price").onclick = function (){
+        console.log(document.getElementById("price").innerText);
+    }
+
+    document.getElementById("select").onclick = function (){
+        console.log(document.getElementById("inputGroupSelect01").value);
+        console.log(document.getElementById("inputGroupSelect01").value.split("-")[1]);
+
+    }
+
+    function search1(){
+        var url = "../ScheduleServlet";
+        var playname = '九零后';
+        if (window.XMLHttpRequest)
+            req = new XMLHttpRequest();
+        else if (window.ActiveXObject)
+            req = new ActiveXObject("Microsoft.XMLHTTP");
+        if (req) {
+            //采用POST方式，异步传输
+            req.open("post", url, true);
+            //POST方式，必须加入如下头信息设定
+            req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            req.onreadystatechange = searchComplete1(playname);
+            req.send("type=search&playid="+document.getElementById("input").value);
+        }
+    }
+
+    function searchComplete1(playname) {
+        if (req.readyState == 4 && req.status == 200) {
+            var theTable = document.getElementById("table");//table的id
+            var num=theTable.rows.length;
+            console.log("playname");
+            while(num>0) {
+                theTable.deleteRow(num-1);
+                num=theTable.rows.length;
+            }
+            var json =  JSON.parse(req.responseText);//转换为json对象
+            for(i=0; i<json.length; i++) {
+                var rowCount = theTable.rows.length; //获得当前表格的行数
+                var row = theTable.insertRow(rowCount);//在tale里动态的增加tr
+                row.insertCell(0).innerHTML = json[i].schedid;
+                row.insertCell(1).innerHTML = json[i].studioid;
+                row.insertCell(2).innerHTML = json[i].playid;
+                row.insertCell(3).innerHTML = json[i].schedtime;
+                row.insertCell(4).innerHTML = json[i].price;
+
+            }
+        }
+    }
+</script>
+</body>
+</html>

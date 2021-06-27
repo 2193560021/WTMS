@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>放映计划</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="css/Bootstrap/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/jq22.css">
+    <link rel="stylesheet" href="css/nav+left.css">
+    <link rel="stylesheet" href="css/Ticket.css">
+    <link rel="stylesheet" href="css/Bootstrap/animate.min.css">
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon"/>
+
+
+</head>
+<body onload="initAll()">
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow nav_top">
+    <a class="navbar-brand col-md-3 col-lg-2 px-3 name" href="#">智慧旅游管理系统</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed float-right" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <nav id="sidebarMenu" class="col-md-2 col-lg-2 d-md-block bg-light sidebar collapse">
+            <div class="sidebar-sticky pt-2">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active_index" href="index.html">
+                            <i class="fa fa-home fa-lg"></i>
+                            &nbsp;&nbsp;首 页<span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="route_plan.html">
+                            <i class="fa fa-camera-retro fa-lg"></i>
+                            &nbsp;&nbsp;行 程 规 划
+                        </a>
+                    </li>
+                    <li id="active_index" class="nav-item">
+                        <a class="nav-link" href="consult.html">
+                            <i class="fa fa-align-left fa-lg"></i>
+                            &nbsp;&nbsp;咨 询 浏 览
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="place_search.html">
+                            <i class="fa fa-search fa-lg"></i>
+                            &nbsp;&nbsp;景 点 查 询
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="hotel_search.html">
+                            <i class="fa fa-hotel fa-lg"></i>
+                            &nbsp;&nbsp;酒 店 查 询
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="play_search.html">
+                            <i class="fa fa-podcast fa-lg"></i>
+                            &nbsp;&nbsp;娱 乐 查 询
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="share.html">
+                            <i class="fa fa-share-alt fa-lg"></i>
+                            &nbsp;&nbsp;分 享 评 价
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="recommend.html">
+                            <i class="fa fa-hashtag fa-lg"></i>
+                            &nbsp;&nbsp;智 能 推 荐
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+            <div class=" d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">咨询浏览</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="input-group mr-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">搜索</span>
+                        </div>
+                        <input type="text" class="form-control " id="schedule_search" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" onkeypress="searchName()">
+                    </div>
+                </div>
+            </div>
+            <div class="animated bounceInUp">
+                
+            </div>
+        </main>
+
+    </div>
+</div>
+<script src="js/Bootstrap/jquery.js"></script>
+<script src="js/jquery.seat-charts.min.js"></script>
+<script src="js/Bootstrap/bootstrap.bundle.js"></script>
+<!--axios-->
+<script src="js/axios.min.js"></script>
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="js/vue.min.js"></script>
+<script src="js/index.js"></script>
+<script src="js/schedule.js"></script>
+</body>
+</html>

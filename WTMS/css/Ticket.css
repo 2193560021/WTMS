@@ -1,0 +1,22 @@
+.movie img{
+
+}
+.card-text1{
+    font-size: 14px;
+    color: #888;
+}
+.movie_list{
+    width: 100%;
+    height: 100%;
+}
+
+.card{
+    width: 49%;
+    height: 19%;
+}
+.main div:nth-child(2n-1){
+    float: right;
+}
+.main div:nth-child(2n){
+    float: left;
+}

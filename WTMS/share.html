@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户管理</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="css/Bootstrap/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/nav+left.css" type="text/css">
+    <link rel="stylesheet" href="css/Bootstrap/animate.min.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+    <script src="js/Bootstrap/jquery.js"></script>
+
+    <script type="text/javascript">
+
+        function search(){
+            var url = "../CustomerServlet";
+            if (window.XMLHttpRequest)
+                req = new XMLHttpRequest();
+            else if (window.ActiveXObject)
+                req = new ActiveXObject("Microsoft.XMLHTTP");
+            if (req) {
+                //采用POST方式，异步传输
+                req.open("post", url, true);
+                //POST方式，必须加入如下头信息设定
+                req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                req.onreadystatechange = searchComplete;
+                req.send("type=search&method=search&name="+document.getElementById("email").value);
+            }
+        }
+
+        function searchComplete() {
+            if (req.readyState == 4 && req.status == 200) {
+                var theTable = document.getElementById("table");//table的id
+                var num=theTable.rows.length;
+                while(num>0) {
+                    theTable.deleteRow(num-1);
+                    num=theTable.rows.length;
+                }
+                var json =  JSON.parse(req.responseText);//转换为json对象
+                for(i=0; i<json.length; i++) {
+                    var rowCount = theTable.rows.length; //获得当前表格的行数
+                    var row = theTable.insertRow(rowCount);//在tale里动态的增加tr
+                    row.insertCell(0).innerHTML = json[i].id;
+                    row.insertCell(1).innerHTML = json[i].name;
+                    row.insertCell(2).innerHTML = json[i].tel;
+                    row.insertCell(3).innerHTML = json[i].email;
+                    row.insertCell(4).innerHTML = json[i].pwd;
+                    row.insertCell(5).innerHTML = '<input type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delModal" value="删除" onclick="del('+json[i].id+')" />';
+                }
+            }
+        }
+
+
+
+
+        function modify(a,b,c,d,e){
+            window.location="detail.html?type=update&id="+a+"&name="+encodeURIComponent(b)+"&rowCount="+c+"&colCount="+d+"&introduction="+encodeURIComponent(e);
+        }
+
+        function del(id){
+
+            $("#delConfirm").click(function (){
+
+                var url = "../CustomerServlet";
+                if (window.XMLHttpRequest)
+                    req = new XMLHttpRequest();
+                else if (window.ActiveXObject)
+                    req = new ActiveXObject("Microsoft.XMLHTTP");
+                if (req) {
+                    //采用POST方式，异步传输
+                    req.open("post", url, true);
+                    //POST方式，必须加入如下头信息设定
+                    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+                    req.onreadystatechange = delComplete;
+                    req.send("type=delete&id="+id);
+                }
+            });
+        }
+        function delComplete() {
+            if (req.readyState == 4 && req.status == 200) {
+                if(req.responseText==1)
+                    search();
+            }
+        }
+
+    </script>
+
+
+</head>
+<body onload="search()">
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow nav_top">
+    <a class="navbar-brand col-md-3 col-lg-2 px-3 name" href="#">智慧旅游管理系统</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed float-right" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <nav id="sidebarMenu" class="col-md-2 col-lg-2 d-md-block bg-light sidebar collapse">
+            <div class="sidebar-sticky pt-2">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active_index" href="index.html">
+                            <i class="fa fa-home fa-lg"></i>
+                            &nbsp;&nbsp;首 页<span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="route_plan.html">
+                            <i class="fa fa-camera-retro fa-lg"></i>
+                            &nbsp;&nbsp;行 程 规 划
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="consult.html">
+                            <i class="fa fa-align-left fa-lg"></i>
+                            &nbsp;&nbsp;咨 询 浏 览
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="place_search.html">
+                            <i class="fa fa-search fa-lg"></i>
+                            &nbsp;&nbsp;景 点 查 询
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="hotel_search.html">
+                            <i class="fa fa-hotel fa-lg"></i>
+                            &nbsp;&nbsp;酒 店 查 询
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="play_search.html">
+                            <i class="fa fa-podcast fa-lg"></i>
+                            &nbsp;&nbsp;娱 乐 查 询
+                        </a>
+                    </li>
+                    <li id="active_index" class="nav-item">
+                        <a class="nav-link" href="share.html">
+                            <i class="fa fa-share-alt fa-lg"></i>
+                            &nbsp;&nbsp;分 享 评 价
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="recommend.html">
+                            <i class="fa fa-hashtag fa-lg"></i>
+                            &nbsp;&nbsp;智 能 推 荐
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+            <div class=" d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">用户管理</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="input-group mr-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">搜索邮箱</span>
+                        </div>
+                        <input type="text" id="email" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" onkeypress="search()">
+                    </div>
+
+                </div>
+            </div>
+            <div class="table-responsive  animated bounceInUp">
+                <table class="table table-hover">
+                    <thead>
+                    <tr class="list_nav">
+                        <th>编号</th>
+                        <th>昵称</th>
+                        <th>电话号码</th>
+                        <th>注册邮箱</th>
+                        <th>密码</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="table">
+                    </tbody>
+                </table>
+            </div>
+        </main>
+        <!--            删除警示-->
+        <div class="modal fade" id="delModal" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="delModalLabel">确认删除</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        请谨慎操作！！！确认删除该用户？
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-danger"  data-dismiss="modal" id="delConfirm">确认删除</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="js/Bootstrap/bootstrap.bundle.js"></script>
+<!--axios-->
+<script src="js/axios.min.js"></script>
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="js/vue.min.js"></script>
+<script src="js/index.js"></script>
+</body>
+</html>

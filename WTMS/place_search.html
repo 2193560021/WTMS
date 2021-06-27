@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>电影查询</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="css/Bootstrap/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/nav+left.css" type="text/css">
+    <link rel="stylesheet" href="css/Bootstrap/animate.min.css">
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
+    <script src="js/Bootstrap/jquery.js"></script>
+</head>
+<style>
+    .card-text1{
+        color: #111;
+        font-family: "黑体";
+        font-size: 18px;
+    }
+</style>
+
+<script type="text/javascript">
+
+    function search(){
+        var url = "../StudioServlet";
+        if (window.XMLHttpRequest)
+            req = new XMLHttpRequest();
+        else if (window.ActiveXObject)
+            req = new ActiveXObject("Microsoft.XMLHTTP");
+        if (req) {
+            //采用POST方式，异步传输
+            req.open("post", url, true);
+            //POST方式，必须加入如下头信息设定
+            req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+            req.onreadystatechange = searchComplete;
+            req.send("type=search&name="+document.getElementById("studioname_search").value);
+        }
+    }
+
+    function searchComplete() {
+        if (req.readyState == 4 && req.status == 200) {
+            var theTable = document.getElementById("table");//table的id
+            var num=theTable.rows.length;
+            while(num>0) {
+                theTable.deleteRow(num-1);
+                num=theTable.rows.length;
+            }
+            var json =  JSON.parse(req.responseText);//转换为json对象
+            for(i=0; i<json.length; i++) {
+                var rowCount = theTable.rows.length; //获得当前表格的行数
+                var row = theTable.insertRow(rowCount);//在tale里动态的增加tr
+                row.insertCell(0).innerHTML = json[i].id;
+                row.insertCell(1).innerHTML = json[i].name;
+                row.insertCell(2).innerHTML = json[i].rowCount;
+                row.insertCell(3).innerHTML = json[i].colCount;
+                row.insertCell(4).innerHTML = json[i].introduction;
+                var tmp = json[i].id + ",\'" + json[i].name + "\'," + json[i].rowCount + "," + json[i].colCount + ",\'" + json[i].introduction +"\'";
+                row.insertCell(5).innerHTML = '<input type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delModal" value="删除" onclick="del('+json[i].id+')" />';
+            }
+        }
+    }
+</script>
+
+
+<body onload="search()" >
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow nav_top">
+    <a class="navbar-brand col-md-3 col-lg-2 px-3 name" href="#">智慧旅游管理系统</a>
+    <button class="navbar-toggler position-absolute d-md-none collapsed float-right" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+</nav>
+<div class="container-fluid">
+    <div class="row">
+        <nav id="sidebarMenu" class="col-md-2 col-lg-2 d-md-block bg-light sidebar collapse">
+            <div class="sidebar-sticky pt-2">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active_index" href="index.html">
+                            <i class="fa fa-home fa-lg"></i>
+                            &nbsp;&nbsp;首 页<span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="route_plan.html">
+                            <i class="fa fa-camera-retro fa-lg"></i>
+                            &nbsp;&nbsp;行 程 规 划
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="consult.html">
+                            <i class="fa fa-align-left fa-lg"></i>
+                            &nbsp;&nbsp;咨 询 浏 览
+                        </a>
+                    </li>
+                    <li id="active_index" class="nav-item">
+                        <a class="nav-link" href="place_search.html">
+                            <i class="fa fa-search fa-lg"></i>
+                            &nbsp;&nbsp;景 点 查 询
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="hotel_search.html">
+                            <i class="fa fa-hotel fa-lg"></i>
+                            &nbsp;&nbsp;酒 店 查 询
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="play_search.html">
+                            <i class="fa fa-podcast fa-lg"></i>
+                            &nbsp;&nbsp;娱 乐 查 询
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="share.html">
+                            <i class="fa fa-share-alt fa-lg"></i>
+                            &nbsp;&nbsp;分 享 评 价
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="recommend.html">
+                            <i class="fa fa-hashtag fa-lg"></i>
+                            &nbsp;&nbsp;智 能 推 荐
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+            <div class=" d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                <h1 class="h2">景点查询</h1>
+                <div class="btn-toolbar mb-2 mb-md-0">
+                    <div class="input-group mr-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">搜索景点</span>
+                        </div>
+                        <input type="text" class="form-control " id="studioname_search" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" onkeypress="search()">
+                    </div>
+                </div>
+            </div>
+            <div id="main" role="main">
+                <div class="card my-3 animated fadeInUp">
+                    <div class="no-gutters float-left row">
+                        <a href="movie/trjta3.html" class="col-md-4 " data-toggle="modal" data-target="#exampleModal">
+                            <img src="img/20" alt="..." class="col-md-12 col-sm-12 movie_list">
+                        </a>
+                        <div class="col-md-8 p-3">
+                            <a href="movie/trjta3.html" class="card-body ml-3" data-toggle="modal" data-target="#exampleModal">
+                                <h4 class="card-title ml-3">太白山</h4>
+                                <p class="card-text1">&nbsp;&nbsp;&nbsp;&nbsp;陕西太白山国家森林公园位于陕西宝鸡，秦岭北麓,眉县、太白县、周至县三县境内。是我国著名的秦岭山脉的主峰，
+                                    也是我国大陆东部的第一高峰，海拔3771.2米。秦岭山脉是我国南方与北方的天然屏障，也是长江、黄河两大水系的分水岭。太白山作为秦岭山脉的主峰，其自然地理条件就更为独特，它那高耸入云的雄伟气势，
+                                    瞬息万变的气候神姿，自古以来就给人们披上了一层神秘的色彩，更为中外科学家和文人学士所向往。</p>
+                                <small class="text-muted ml-3">上映时间：2021-02-12(中国大陆)</small>
+                            </a><a href="movie/trjta3.html" class="btn btn-primary float-right col-md-3 mr-3" data-toggle="modal"
+                                data-target="#exampleModal">购票</a>
+            
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-1 mb-1 animated fadeInUp">
+                    <div class="row no-gutters">
+                        <a href="movie/nhlhy.html" class="col-md-4 ">
+                            <img src="img/p2622388983.webp" alt="..." class="col-md-12 col-sm-12 movie_list">
+                        </a>
+                        <div class="col-md-8 pr-2">
+                            <a href="movie/nhlhy.html" class="card-body ml-3">
+                                <h4 class="card-title ml-3">你好！李焕英</h4>
+                                <p class="card-text1">&nbsp;&nbsp;&nbsp;&nbsp;2001年的某一天，刚刚考上大学的贾晓玲（贾玲
+                                    饰）经历了人生中的一次大起大落。一心想要成为母亲骄傲的她却因母亲突遭严重意外，而悲痛万分。在贾晓玲情绪崩溃的状态下，竟意外的回到了1981年，并与年轻的母亲李焕英（张小斐
+                                    饰）相遇，二人形影不离，宛如闺蜜......</p>
+                                <small class="text-muted ml-3">上映时间：2021-02-12(中国大陆)</small>
+                            </a><a href="movie/nhlhy.html" class="btn btn-primary float-right col-md-3 mr-2">购票</a>
+            
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-1 mb-1 animated fadeInUp">
+                    <div class="row no-gutters">
+                        <a href="movie/csxsj.html" target="_blank" class="col-md-4 ">
+                            <img src="img/p2630961915.webp" alt="..." class="col-md-12 col-sm-12 movie_list">
+                        </a>
+                        <div class="col-md-8 pr-2">
+                            <a href="movie/csxsj.html" target="_blank" class="card-body ml-3">
+                                <h4 class="card-title ml-3">刺杀小说家</h4>
+                                <p class="card-text1">&nbsp;&nbsp;&nbsp;&nbsp;异世界皇都，天神赤发鬼残暴统治，滥杀无辜。少年空文因被赤发鬼追杀，决定奋起反击。在黑甲（郭京飞
+                                    饰）的指引下，踏上了凡人弑神之路。这是小说家路空文（董子健 饰）笔下的奇幻世界。没想到小说的进程，竟然影响着现实世界。这时一名男子（雷佳音 饰）接下了刺杀他的任务……</p>
+                                <small class="text-muted ml-3">上映时间：2021-02-12(中国大陆)</small>
+                            </a><a href="movie/csxsj.html" target="_blank" class="btn btn-primary float-right col-md-3 mr-2">购票</a>
+            
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-1 mb-1 animated fadeInUp">
+                    <div class="row no-gutters">
+                        <a href="movie/rcxy.html" target="_blank" class="col-md-4 ">
+                            <img src="img/p2622670167.webp" alt="..." class="col-md-12 col-sm-12 movie_list">
+                        </a>
+                        <div class="col-md-8 pr-2">
+                            <a href="movie/rcxy.html" target="_blank" class="card-body ml-3">
+                                <h4 class="card-title ml-3">人潮汹涌</h4>
+                                <p class="card-text1">&nbsp;&nbsp;&nbsp;&nbsp;2021年，你做好准备换个活法，牛转乾坤了吗？ 顶级杀手周全（刘德华 饰）和落寞群演陈小萌（肖央
+                                    饰）在一次意外中交换了身份。杀手在跌入谷底的过程中，重新审视了爱情和生活；群演在冒充杀手的过程中，彻底重塑了人生。两个人一起历经的荒诞，有啼笑皆非，更有热血沸腾。</p>
+                                <small class="text-muted ml-3">上映时间：2021-02-12(中国大陆)</small>
+                            </a><a href="movie/rcxy.html" target="_blank" class="btn btn-primary float-right col-md-3 mr-2">购票</a>
+            
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-1 mb-1 animated fadeInUp">
+                    <div class="row no-gutters">
+                        <a href="movie/lldq.html" target="_blank" class="col-md-4 ">
+                            <img src="img/p2545472803.webp" alt="..." class="col-md-12 col-sm-12 movie_list">
+                        </a>
+                        <div class="col-md-8 pr-2">
+                            <a href="movie/lldq.html" target="_blank" class="card-body ml-3">
+                                <h4 class="card-title ml-3">流浪地球</h4>
+                                <p class="card-text1">
+                                    &nbsp;&nbsp;&nbsp;&nbsp;近未来，科学家们发现太阳急速衰老膨胀，短时间内包括地球在内的整个太阳系都将被太阳所吞没。为了自救，人类提出一个名为“流浪地球”的大胆计划，即倾全球之力在地球表面建造上万座发动机和转向发动机，推动地球离开太阳系，用2500年的时间奔往另外一个栖息之地……
+                                </p>
+                                <small class="text-muted ml-3">上映时间：2019-02-05(中国大陆)</small>
+                            </a><a href="movie/lldq.html" target="_blank" class="btn btn-primary float-right col-md-3 mr-2">购票</a>
+            
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-1 mb-1 animated fadeInUp">
+                    <div class="row no-gutters">
+                        <a href="movie/afd.html" target="_blank" class="col-md-4 ">
+                            <img src="img/p2634997853.webp" alt="..." class="col-md-12 col-sm-12 movie_list">
+                        </a>
+                        <div class="col-md-8 pr-2">
+                            <a href="movie/afd.html" target="_blank" class="card-body ml-3">
+                                <h4 class="card-title ml-3">阿凡达</h4>
+                                <p class="card-text1">&nbsp;&nbsp;&nbsp;&nbsp;战斗中负伤而下身瘫痪的前海军战士杰克·萨利（萨姆·沃辛顿 Sam Worthington
+                                    饰）决定替死去的同胞哥哥来到潘多拉星操纵格蕾丝博士（西格妮·韦弗 Sigourney Weaver 饰）用人类基因与当地纳美部族基因结合创造出的 “阿凡达”
+                                    混血生物。杰克的目的是打入纳美部落，外交说服他们......</p>
+                                <small class="text-muted ml-3">上映时间：2010-01-04(中国大陆)</small>
+                            </a><a href="movie/afd.html" class="btn btn-primary float-right col-md-3 mr-2">购票</a>
+            
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-1 mb-1 animated fadeInUp" style="width: 49%;height: 20%;">
+                    <div class="row no-gutters">
+                        <a href="movie/fczlm.html" class="col-md-4 ">
+                            <img src="img/p2550755859.webp" alt="..." class="col-md-12 col-sm-12 movie_list">
+                        </a>
+                        <div class="col-md-8 pr-2">
+                            <a href="movie/fczlm.html" class="card-body ml-3">
+                                <h4 class="card-title ml-3">复仇者联盟4：终局之战</h4>
+                                <p class="card-text1">&nbsp;&nbsp;&nbsp;&nbsp;一声响指，宇宙间半数生命灰飞烟灭。几近绝望的复仇者们在惊奇队长（布丽·拉尔森 Brie Larson
+                                    饰）的帮助下找到灭霸（乔什·布洛林 Josh Brolin 饰）归隐之处，却得知六颗无限宝石均被销毁，希望彻底破灭。如是过了五年，迷失在量子领域的蚁人（保罗·路德 Paul Rudd
+                                    饰）意外回到现实世界...</p>
+                                <small class="text-muted ml-3">上映时间：2021-02-12(中国大陆)</small>
+                            </a><a href="movie/fczlm.html" class="btn btn-primary float-right col-md-3 mr-2">购票</a>
+            
+                        </div>
+                    </div>
+                </div>
+                <div class="card mt-1 mb-1 animated fadeInUp" style="width: 49%;height: 20%;">
+                    <div class="row no-gutters">
+                        <a href="movie/fkysr.html" class="col-md-4 ">
+                            <img src="img/p2629710964.webp" alt="..." class="col-md-12 col-sm-12 movie_list">
+                        </a>
+                        <div class="col-md-8 pr-2">
+                            <a href="movie/fkysr.html" class="card-body ml-3">
+                                <h4 class="card-title ml-3">疯狂原始人2</h4>
+                                <p class="card-text1">&nbsp;&nbsp;&nbsp;&nbsp;经历了逃离洞穴、挺过末日危机之后的原始人咕噜家族，咕噜一家决定寻找新家园。中途盖（瑞恩·雷诺兹 Ryan
+                                    Reynolds 配音）已成了咕噜一家中的一员，但让瓜哥（尼古拉斯·凯奇 Nicolas Cage 配音）头疼的是，盖跟女儿小伊（艾玛·斯通 Emma Stone
+                                    配音）每天你侬我侬，还妄想组成只属于两人的小家庭......</p>
+                                <small class="text-muted ml-3">上映时间：2021-02-12(中国大陆)</small>
+                            </a><a href="movie/fkysr.html" class="btn btn-primary float-right col-md-3 mr-2">购票</a>
+            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>
+<script src="js/Bootstrap/bootstrap.bundle.js"></script>
+<!--axios-->
+<script src="js/axios.min.js"></script>
+<!-- 开发环境版本，包含了有帮助的命令行警告 -->
+<script src="js/vue.min.js"></script>
+<script src="js/index.js"></script>
+
+<script>//添加
+
+</script>
+
+<script>
+
+</script>
+</body>
+</html>
