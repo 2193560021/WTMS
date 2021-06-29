@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>电影查询</title>
+    <title>景点查询</title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
     <link rel="stylesheet" href="css/Bootstrap/bootstrap.min.css" type="text/css">
     <link rel="stylesheet" href="css/nav+left.css" type="text/css">
@@ -13,53 +13,27 @@
 </head>
 <style>
     .card-text1{
-        color: #111;
+        color: #555;
         font-family: "黑体";
         font-size: 18px;
     }
+    .card1:hover .card-text1{
+        color: #000;
+    }
+    .card1:hover{
+        transition: .2s;
+        transform: translateX(100px);
+        box-shadow:
+                0 4.2px 1.9px rgba(0, 0, 0, 0.024),
+                0 4.6px 4.3px rgba(0, 0, 0, 0.035),
+                0 4.8px 7.7px rgba(0, 0, 0, 0.043),
+                0 5.5px 12.8px rgba(0, 0, 0, 0.05),
+                0 7.7px 21.2px rgba(0, 0, 0, 0.058),
+                0 13.1px 37px rgba(0, 0, 0, 0.066),
+                0 40px 80px rgba(0, 0, 0, 0.08)
+    ;
+    }
 </style>
-
-<script type="text/javascript">
-
-    function search(){
-        var url = "../StudioServlet";
-        if (window.XMLHttpRequest)
-            req = new XMLHttpRequest();
-        else if (window.ActiveXObject)
-            req = new ActiveXObject("Microsoft.XMLHTTP");
-        if (req) {
-            //采用POST方式，异步传输
-            req.open("post", url, true);
-            //POST方式，必须加入如下头信息设定
-            req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-            req.onreadystatechange = searchComplete;
-            req.send("type=search&name="+document.getElementById("studioname_search").value);
-        }
-    }
-
-    function searchComplete() {
-        if (req.readyState == 4 && req.status == 200) {
-            var theTable = document.getElementById("table");//table的id
-            var num=theTable.rows.length;
-            while(num>0) {
-                theTable.deleteRow(num-1);
-                num=theTable.rows.length;
-            }
-            var json =  JSON.parse(req.responseText);//转换为json对象
-            for(i=0; i<json.length; i++) {
-                var rowCount = theTable.rows.length; //获得当前表格的行数
-                var row = theTable.insertRow(rowCount);//在tale里动态的增加tr
-                row.insertCell(0).innerHTML = json[i].id;
-                row.insertCell(1).innerHTML = json[i].name;
-                row.insertCell(2).innerHTML = json[i].rowCount;
-                row.insertCell(3).innerHTML = json[i].colCount;
-                row.insertCell(4).innerHTML = json[i].introduction;
-                var tmp = json[i].id + ",\'" + json[i].name + "\'," + json[i].rowCount + "," + json[i].colCount + ",\'" + json[i].introduction +"\'";
-                row.insertCell(5).innerHTML = '<input type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delModal" value="删除" onclick="del('+json[i].id+')" />';
-            }
-        }
-    }
-</script>
 
 
 <body onload="search()" >
@@ -87,9 +61,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="consult.html">
-                            <i class="fa fa-align-left fa-lg"></i>
-                            &nbsp;&nbsp;咨 询 浏 览
+                        <a class="nav-link" href="map.html">
+                            <i class="fa fa-map fa-lg"></i>
+                            &nbsp;&nbsp;地 图 查 询
                         </a>
                     </li>
                     <li id="active_index" class="nav-item">
@@ -113,7 +87,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="share.html">
                             <i class="fa fa-share-alt fa-lg"></i>
-                            &nbsp;&nbsp;分 享 评 价
+                            &nbsp;&nbsp;分 享 交 流
                         </a>
                     </li>
                     <li class="nav-item">
@@ -129,152 +103,166 @@
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
             <div class=" d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 <h1 class="h2">景点查询</h1>
-                <div class="btn-toolbar mb-2 mb-md-0">
-                    <div class="input-group mr-2">
+                <div class="btn-toolbar col-md-5 mb-md-0">
+
+                    <div class="input-group mr-2 col-md-12">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text">省份</label>
+                        </div>
+                        <select class="custom-select col-md-3" id="inputGroupSelect01">
+                            <option selected>请选择</option>
+                            <option value="1">全国</option>
+                            <option value="2">北京</option>
+                            <option value="3">上海</option>
+                            <option value="4">天津</option>
+                            <option value="5">重庆</option>
+                            <option value="6">广东</option>
+                            <option value="6">广西</option>
+                            <option value="6">海南</option>
+                            <option value="6">内蒙古</option>
+                            <option value="6">黑龙江</option>
+                            <option value="6">吉林</option>
+                            <option value="6">辽宁</option>
+                            <option value="6">河北</option>
+                            <option value="6">河南</option>
+                            <option value="6">湖北</option>
+                            <option value="6">湖南</option>
+                            <option value="6">山东</option>
+                            <option value="6">山西</option>
+                            <option value="6">江西</option>
+                            <option value="6">江苏</option>
+                            <option value="6">浙江</option>
+                            <option value="6">安徽</option>
+                            <option value="6">福建</option>
+                            <option value="6">四川</option>
+                            <option value="6">云南</option>
+                            <option value="6">贵州</option>
+                            <option value="6">陕西</option>
+                            <option value="6">甘肃</option>
+                            <option value="6">宁夏</option>
+                            <option value="6">新疆</option>
+                            <option value="6">青海</option>
+                            <option value="6">西藏</option>
+                            <option value="6">香港</option>
+                            <option value="6">澳门</option>
+                            <option value="6">台湾</option>
+                        </select>
+
                         <div class="input-group-prepend">
                             <span class="input-group-text" id="inputGroup-sizing-default">搜索景点</span>
                         </div>
-                        <input type="text" class="form-control " id="studioname_search" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" onkeypress="search()">
+                        <input type="text" class="form-control" id="studioname_search" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" onkeypress="search()">
                     </div>
                 </div>
             </div>
             <div id="main" role="main">
-                <div class="card my-3 animated fadeInUp">
-                    <div class="no-gutters float-left row">
-                        <a href="movie/trjta3.html" class="col-md-4 " data-toggle="modal" data-target="#exampleModal">
-                            <img src="img/20" alt="..." class="col-md-12 col-sm-12 movie_list">
-                        </a>
-                        <div class="col-md-8 p-3">
-                            <a href="movie/trjta3.html" class="card-body ml-3" data-toggle="modal" data-target="#exampleModal">
-                                <h4 class="card-title ml-3">太白山</h4>
+                <div class="card my-3 animated fadeInUp card1">
+                    <a href="#">
+                        <div class="no-gutters row">
+                                <img src="img/20160716081705972.jpg" class="col-md-4 float-left">
+                            <div class="col-md-8 p-3 float-right">
+                                <h4 class="card-title ml-4">太白山</h4>
                                 <p class="card-text1">&nbsp;&nbsp;&nbsp;&nbsp;陕西太白山国家森林公园位于陕西宝鸡，秦岭北麓,眉县、太白县、周至县三县境内。是我国著名的秦岭山脉的主峰，
                                     也是我国大陆东部的第一高峰，海拔3771.2米。秦岭山脉是我国南方与北方的天然屏障，也是长江、黄河两大水系的分水岭。太白山作为秦岭山脉的主峰，其自然地理条件就更为独特，它那高耸入云的雄伟气势，
                                     瞬息万变的气候神姿，自古以来就给人们披上了一层神秘的色彩，更为中外科学家和文人学士所向往。</p>
-                                <small class="text-muted ml-3">上映时间：2021-02-12(中国大陆)</small>
-                            </a><a href="movie/trjta3.html" class="btn btn-primary float-right col-md-3 mr-3" data-toggle="modal"
-                                data-target="#exampleModal">购票</a>
-            
+                                <small class="text-muted pl-4">&nbsp;&nbsp;&nbsp;&nbsp;位置：陕西省宝鸡市</small>
+                                <input type="button" class="btn btn-primary float-right col-md-3 mx-auto my-2" value="详情"/>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
-                <div class="card mt-1 mb-1 animated fadeInUp">
-                    <div class="row no-gutters">
-                        <a href="movie/nhlhy.html" class="col-md-4 ">
-                            <img src="img/p2622388983.webp" alt="..." class="col-md-12 col-sm-12 movie_list">
-                        </a>
-                        <div class="col-md-8 pr-2">
-                            <a href="movie/nhlhy.html" class="card-body ml-3">
-                                <h4 class="card-title ml-3">你好！李焕英</h4>
-                                <p class="card-text1">&nbsp;&nbsp;&nbsp;&nbsp;2001年的某一天，刚刚考上大学的贾晓玲（贾玲
-                                    饰）经历了人生中的一次大起大落。一心想要成为母亲骄傲的她却因母亲突遭严重意外，而悲痛万分。在贾晓玲情绪崩溃的状态下，竟意外的回到了1981年，并与年轻的母亲李焕英（张小斐
-                                    饰）相遇，二人形影不离，宛如闺蜜......</p>
-                                <small class="text-muted ml-3">上映时间：2021-02-12(中国大陆)</small>
-                            </a><a href="movie/nhlhy.html" class="btn btn-primary float-right col-md-3 mr-2">购票</a>
-            
+                <div class="card my-3 animated fadeInUp card1">
+                    <a href="#">
+                        <div class="no-gutters row">
+                            <img src="img/wccz-fypyuvc8275789.jpg" class="col-md-4 float-left">
+                            <div class="col-md-8 p-3 float-right">
+                                <h4 class="card-title ml-4">法门寺</h4>
+                                <p class="card-text1">&nbsp;&nbsp;&nbsp;&nbsp;法门寺（Famen Temple），又名“真身宝塔”，位于炎帝故里、青铜器之乡——宝鸡市，
+                                    全国重点文物保护单位。法门寺始建于东汉末年桓灵年间，距今约有1700多年历史，有“关中塔庙始祖”之称
+                                    ，周魏以前称作“阿育王寺”，隋文帝时改称“成实道场”，唐高祖时改名“法门寺”。法门寺被誉为皇家寺庙，因
+                                    安置释迦牟尼佛指骨舍利而成为举国仰望的佛教圣地。法门寺佛塔被誉为“护国真身宝塔”。寺庙所在的法门寺文化景
+                                    区为国家AAAAA级旅游景区。</p>
+                                <small class="text-muted pl-4">&nbsp;&nbsp;&nbsp;&nbsp;位置：陕西省宝鸡市</small>
+                                <input type="button" class="btn btn-primary float-right col-md-3  mx-auto my-2" value="详情"/>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
-                <div class="card mt-1 mb-1 animated fadeInUp">
-                    <div class="row no-gutters">
-                        <a href="movie/csxsj.html" target="_blank" class="col-md-4 ">
-                            <img src="img/p2630961915.webp" alt="..." class="col-md-12 col-sm-12 movie_list">
-                        </a>
-                        <div class="col-md-8 pr-2">
-                            <a href="movie/csxsj.html" target="_blank" class="card-body ml-3">
-                                <h4 class="card-title ml-3">刺杀小说家</h4>
-                                <p class="card-text1">&nbsp;&nbsp;&nbsp;&nbsp;异世界皇都，天神赤发鬼残暴统治，滥杀无辜。少年空文因被赤发鬼追杀，决定奋起反击。在黑甲（郭京飞
-                                    饰）的指引下，踏上了凡人弑神之路。这是小说家路空文（董子健 饰）笔下的奇幻世界。没想到小说的进程，竟然影响着现实世界。这时一名男子（雷佳音 饰）接下了刺杀他的任务……</p>
-                                <small class="text-muted ml-3">上映时间：2021-02-12(中国大陆)</small>
-                            </a><a href="movie/csxsj.html" target="_blank" class="btn btn-primary float-right col-md-3 mr-2">购票</a>
-            
+                <div class="card my-3 animated fadeInUp card1">
+                    <a href="#">
+                        <div class="no-gutters row">
+                            <img src="img/src=http___pic.51yuansu.com_pic3_cover_02_38_12_59c27aaec6196_610.jpg&refer=http___pic.51yuansu.jfif" class="col-md-4 float-left">
+                            <div class="col-md-8 p-3 float-right">
+                                <h4 class="card-title ml-4">莫高窟</h4>
+                                <p class="card-text1">&nbsp;&nbsp;&nbsp;&nbsp;莫高窟，俗称千佛洞，坐落在河西走廊西端的敦煌。
+                                    它始建于前秦宣昭帝苻坚时期，后历经北朝、隋朝、唐朝、五代十国、西夏、元朝等
+                                    历代的兴建，形成巨大的规模，有洞窟735个，壁画4.5万平方米、泥质彩塑2415尊
+                                    ，是世界上现存规模最大、内容最丰富的佛教艺术地。1961年，莫高窟被中华人民共和
+                                    国国务院公布为第一批全国重点文物保护单位之一。1987年，莫高窟被列为世界文化遗产。</p>
+                                <small class="text-muted pl-4">&nbsp;&nbsp;&nbsp;&nbsp;位置：甘肃省敦煌市</small>
+                                <input type="button" class="btn btn-primary float-right col-md-3  mx-auto my-2" value="详情"/>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
-                <div class="card mt-1 mb-1 animated fadeInUp">
-                    <div class="row no-gutters">
-                        <a href="movie/rcxy.html" target="_blank" class="col-md-4 ">
-                            <img src="img/p2622670167.webp" alt="..." class="col-md-12 col-sm-12 movie_list">
-                        </a>
-                        <div class="col-md-8 pr-2">
-                            <a href="movie/rcxy.html" target="_blank" class="card-body ml-3">
-                                <h4 class="card-title ml-3">人潮汹涌</h4>
-                                <p class="card-text1">&nbsp;&nbsp;&nbsp;&nbsp;2021年，你做好准备换个活法，牛转乾坤了吗？ 顶级杀手周全（刘德华 饰）和落寞群演陈小萌（肖央
-                                    饰）在一次意外中交换了身份。杀手在跌入谷底的过程中，重新审视了爱情和生活；群演在冒充杀手的过程中，彻底重塑了人生。两个人一起历经的荒诞，有啼笑皆非，更有热血沸腾。</p>
-                                <small class="text-muted ml-3">上映时间：2021-02-12(中国大陆)</small>
-                            </a><a href="movie/rcxy.html" target="_blank" class="btn btn-primary float-right col-md-3 mr-2">购票</a>
-            
+                <div class="card my-3 animated fadeInUp card1">
+                    <a href="#a">
+                        <div class="no-gutters row">
+                            <img src="img/74d0a35fdc9b42de8eaae5ab5a5222ea.jpeg" class="col-md-4 float-left">
+                            <div class="col-md-8 p-3 float-right">
+                                <h4 class="card-title ml-3">北京故宫</h4>
+                                <p class="card-text1">&nbsp;&nbsp;&nbsp;&nbsp;北京故宫是中国明清两代的皇家宫殿，旧称紫禁城，
+                                    位于北京中轴线的中心。北京故宫以三大殿为中心，占地面积约72万平方米，建筑面积约15万平方
+                                    米，有大小宫殿七十多座，房屋九千余间。北京故宫内的建筑分为外朝和内廷两部分。外朝的中心为
+                                    太和殿、中和殿、保和殿，统称三大殿，是国家举行大典礼的地方。东六宫东侧是天穹宝殿等佛堂建筑，
+                                    西六宫西侧是中正殿等佛堂建筑。外朝、内廷之外还有外东路、外西路两部分建筑。</p>
+                                <small class="text-muted pl-4">&nbsp;&nbsp;&nbsp;&nbsp;位置：北京市</small>
+                                <input type="button" class="btn btn-primary float-right col-md-3  mx-auto my-2" value="详情"/>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
-                <div class="card mt-1 mb-1 animated fadeInUp">
-                    <div class="row no-gutters">
-                        <a href="movie/lldq.html" target="_blank" class="col-md-4 ">
-                            <img src="img/p2545472803.webp" alt="..." class="col-md-12 col-sm-12 movie_list">
-                        </a>
-                        <div class="col-md-8 pr-2">
-                            <a href="movie/lldq.html" target="_blank" class="card-body ml-3">
-                                <h4 class="card-title ml-3">流浪地球</h4>
-                                <p class="card-text1">
-                                    &nbsp;&nbsp;&nbsp;&nbsp;近未来，科学家们发现太阳急速衰老膨胀，短时间内包括地球在内的整个太阳系都将被太阳所吞没。为了自救，人类提出一个名为“流浪地球”的大胆计划，即倾全球之力在地球表面建造上万座发动机和转向发动机，推动地球离开太阳系，用2500年的时间奔往另外一个栖息之地……
-                                </p>
-                                <small class="text-muted ml-3">上映时间：2019-02-05(中国大陆)</small>
-                            </a><a href="movie/lldq.html" target="_blank" class="btn btn-primary float-right col-md-3 mr-2">购票</a>
-            
+                <div class="card my-3 animated fadeInUp card1">
+                    <a href="#">
+                        <div class="no-gutters row">
+                            <img src="img/37d3d539b6003af3d083e670eef84e581038b638.jpeg" class="col-md-4 float-left">
+                            <div class="col-md-8 p-3 float-right">
+                                <h4 class="card-title ml-3">大雁塔</h4>
+                                <p class="card-text1">&nbsp;&nbsp;&nbsp;&nbsp;大雁塔位于唐长安城晋昌坊（今陕西省西安市南）的大慈恩寺内，又名“慈恩寺塔”。
+                                    唐永徽三年（652年），玄奘为保存由天竺经丝绸之路带回长安的经卷佛像主持修建了大雁塔，最初五层，后加盖至九层，再后层数和高度又有数次变更，最后固定为所看到的七层塔身，通高64.517米，底层边长25.5米。
+                                    大雁塔作为现存最早、规模最大的唐代四方楼阁式砖塔，是佛塔这种古印度佛寺的建筑形式随佛教传入中原地区，并
+                                    融入华夏文化的典型物证，是凝聚了中国古代劳动人民智慧结晶的标志性建筑。</p>
+                                <small class="text-muted pl-4">&nbsp;&nbsp;&nbsp;&nbsp;位置：陕西省西安市</small>
+                                <input type="button" class="btn btn-primary float-right col-md-3  mx-auto my-2" value="详情"/>
+                            </div>
                         </div>
-                    </div>
+                    </a>
                 </div>
-                <div class="card mt-1 mb-1 animated fadeInUp">
-                    <div class="row no-gutters">
-                        <a href="movie/afd.html" target="_blank" class="col-md-4 ">
-                            <img src="img/p2634997853.webp" alt="..." class="col-md-12 col-sm-12 movie_list">
-                        </a>
-                        <div class="col-md-8 pr-2">
-                            <a href="movie/afd.html" target="_blank" class="card-body ml-3">
-                                <h4 class="card-title ml-3">阿凡达</h4>
-                                <p class="card-text1">&nbsp;&nbsp;&nbsp;&nbsp;战斗中负伤而下身瘫痪的前海军战士杰克·萨利（萨姆·沃辛顿 Sam Worthington
-                                    饰）决定替死去的同胞哥哥来到潘多拉星操纵格蕾丝博士（西格妮·韦弗 Sigourney Weaver 饰）用人类基因与当地纳美部族基因结合创造出的 “阿凡达”
-                                    混血生物。杰克的目的是打入纳美部落，外交说服他们......</p>
-                                <small class="text-muted ml-3">上映时间：2010-01-04(中国大陆)</small>
-                            </a><a href="movie/afd.html" class="btn btn-primary float-right col-md-3 mr-2">购票</a>
-            
+                <div class="card my-3 animated fadeInUp card1">
+                    <a href="#">
+                        <div class="no-gutters row">
+                            <img src="img/u=1691221326,2458772386&fm=173&app=25&f=JPEG.jfif" class="col-md-4 float-left">
+                            <div class="col-md-8 p-3 float-right">
+                                <h4 class="card-title ml-3">兵马俑</h4>
+                                <p class="card-text1">&nbsp;&nbsp;&nbsp;&nbsp;兵马俑，即秦始皇兵马俑，亦简称秦兵马俑或秦俑，第一批全国重点文物保护单位
+                                    ，第一批中国世界遗产，位于今陕西省西安市临潼区秦始皇陵以东1.5千米处的兵马俑坑内。
+                                    兵马俑是古代墓葬雕塑的一个类别。古代施行人殉，奴隶是奴隶主生前的附属品，奴隶主死后奴隶
+                                    要作为殉葬品为奴隶主陪葬。兵马俑即制成兵马（战车、战马、士兵）形状的殉葬品</p>
+                                <small class="text-muted pl-4">&nbsp;&nbsp;&nbsp;&nbsp;位置：陕西省西安市</small>
+                                <input type="button" class="btn btn-primary float-right col-md-3  mx-auto my-2" value="详情"/>
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="card mt-1 mb-1 animated fadeInUp" style="width: 49%;height: 20%;">
-                    <div class="row no-gutters">
-                        <a href="movie/fczlm.html" class="col-md-4 ">
-                            <img src="img/p2550755859.webp" alt="..." class="col-md-12 col-sm-12 movie_list">
-                        </a>
-                        <div class="col-md-8 pr-2">
-                            <a href="movie/fczlm.html" class="card-body ml-3">
-                                <h4 class="card-title ml-3">复仇者联盟4：终局之战</h4>
-                                <p class="card-text1">&nbsp;&nbsp;&nbsp;&nbsp;一声响指，宇宙间半数生命灰飞烟灭。几近绝望的复仇者们在惊奇队长（布丽·拉尔森 Brie Larson
-                                    饰）的帮助下找到灭霸（乔什·布洛林 Josh Brolin 饰）归隐之处，却得知六颗无限宝石均被销毁，希望彻底破灭。如是过了五年，迷失在量子领域的蚁人（保罗·路德 Paul Rudd
-                                    饰）意外回到现实世界...</p>
-                                <small class="text-muted ml-3">上映时间：2021-02-12(中国大陆)</small>
-                            </a><a href="movie/fczlm.html" class="btn btn-primary float-right col-md-3 mr-2">购票</a>
-            
-                        </div>
-                    </div>
-                </div>
-                <div class="card mt-1 mb-1 animated fadeInUp" style="width: 49%;height: 20%;">
-                    <div class="row no-gutters">
-                        <a href="movie/fkysr.html" class="col-md-4 ">
-                            <img src="img/p2629710964.webp" alt="..." class="col-md-12 col-sm-12 movie_list">
-                        </a>
-                        <div class="col-md-8 pr-2">
-                            <a href="movie/fkysr.html" class="card-body ml-3">
-                                <h4 class="card-title ml-3">疯狂原始人2</h4>
-                                <p class="card-text1">&nbsp;&nbsp;&nbsp;&nbsp;经历了逃离洞穴、挺过末日危机之后的原始人咕噜家族，咕噜一家决定寻找新家园。中途盖（瑞恩·雷诺兹 Ryan
-                                    Reynolds 配音）已成了咕噜一家中的一员，但让瓜哥（尼古拉斯·凯奇 Nicolas Cage 配音）头疼的是，盖跟女儿小伊（艾玛·斯通 Emma Stone
-                                    配音）每天你侬我侬，还妄想组成只属于两人的小家庭......</p>
-                                <small class="text-muted ml-3">上映时间：2021-02-12(中国大陆)</small>
-                            </a><a href="movie/fkysr.html" class="btn btn-primary float-right col-md-3 mr-2">购票</a>
-            
-                        </div>
-                    </div>
+                    </a>
                 </div>
             </div>
+            <footer class="text-center pt-3">
+                <div class="mx-auto col-md-12 " id="company">
+                    <p>版权所有 © @2021</p>
+                </div>
+                <div class="mx-auto col-md-12 " id="footer_right">
+                    <p class="col-xl-12">@2021-鱼尔Snn旅游文化有限公司</p>
+                </div>
+            </footer>
         </main>
     </div>
 </div>

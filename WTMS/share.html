@@ -10,81 +10,25 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
     <script src="js/Bootstrap/jquery.js"></script>
-
-    <script type="text/javascript">
-
-        function search(){
-            var url = "../CustomerServlet";
-            if (window.XMLHttpRequest)
-                req = new XMLHttpRequest();
-            else if (window.ActiveXObject)
-                req = new ActiveXObject("Microsoft.XMLHTTP");
-            if (req) {
-                //采用POST方式，异步传输
-                req.open("post", url, true);
-                //POST方式，必须加入如下头信息设定
-                req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                req.onreadystatechange = searchComplete;
-                req.send("type=search&method=search&name="+document.getElementById("email").value);
-            }
+    <style>
+        main div.col-md-3{
+            float: left;
+            border-radius: 10px;
         }
-
-        function searchComplete() {
-            if (req.readyState == 4 && req.status == 200) {
-                var theTable = document.getElementById("table");//table的id
-                var num=theTable.rows.length;
-                while(num>0) {
-                    theTable.deleteRow(num-1);
-                    num=theTable.rows.length;
-                }
-                var json =  JSON.parse(req.responseText);//转换为json对象
-                for(i=0; i<json.length; i++) {
-                    var rowCount = theTable.rows.length; //获得当前表格的行数
-                    var row = theTable.insertRow(rowCount);//在tale里动态的增加tr
-                    row.insertCell(0).innerHTML = json[i].id;
-                    row.insertCell(1).innerHTML = json[i].name;
-                    row.insertCell(2).innerHTML = json[i].tel;
-                    row.insertCell(3).innerHTML = json[i].email;
-                    row.insertCell(4).innerHTML = json[i].pwd;
-                    row.insertCell(5).innerHTML = '<input type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delModal" value="删除" onclick="del('+json[i].id+')" />';
-                }
-            }
+        h6{
+            color: #000;
         }
-
-
-
-
-        function modify(a,b,c,d,e){
-            window.location="detail.html?type=update&id="+a+"&name="+encodeURIComponent(b)+"&rowCount="+c+"&colCount="+d+"&introduction="+encodeURIComponent(e);
+        /*页脚*/
+        footer{
+            height: 100px;
+            background-color: #eee;
+            border-top: 0.5px #000 solid;
         }
-
-        function del(id){
-
-            $("#delConfirm").click(function (){
-
-                var url = "../CustomerServlet";
-                if (window.XMLHttpRequest)
-                    req = new XMLHttpRequest();
-                else if (window.ActiveXObject)
-                    req = new ActiveXObject("Microsoft.XMLHTTP");
-                if (req) {
-                    //采用POST方式，异步传输
-                    req.open("post", url, true);
-                    //POST方式，必须加入如下头信息设定
-                    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                    req.onreadystatechange = delComplete;
-                    req.send("type=delete&id="+id);
-                }
-            });
+        #company p{
+            color: #666;
+            font-family: "Adobe 黑体 Std R";
         }
-        function delComplete() {
-            if (req.readyState == 4 && req.status == 200) {
-                if(req.responseText==1)
-                    search();
-            }
-        }
-
-    </script>
+    </style>
 
 
 </head>
@@ -113,9 +57,9 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="consult.html">
-                            <i class="fa fa-align-left fa-lg"></i>
-                            &nbsp;&nbsp;咨 询 浏 览
+                        <a class="nav-link" href="map.html">
+                            <i class="fa fa-map fa-lg"></i>
+                            &nbsp;&nbsp;地 图 查 询
                         </a>
                     </li>
                     <li class="nav-item">
@@ -139,7 +83,7 @@
                     <li id="active_index" class="nav-item">
                         <a class="nav-link" href="share.html">
                             <i class="fa fa-share-alt fa-lg"></i>
-                            &nbsp;&nbsp;分 享 评 价
+                            &nbsp;&nbsp;分 享 交 流
                         </a>
                     </li>
                     <li class="nav-item">
@@ -152,56 +96,233 @@
             </div>
         </nav>
 
-        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-            <div class=" d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">用户管理</h1>
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4 py-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
+            <div class=" d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                <h1 class="h2">分享交流</h1>
                 <div class="btn-toolbar mb-2 mb-md-0">
                     <div class="input-group mr-2">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="inputGroup-sizing-default">搜索邮箱</span>
+                            <span class="input-group-text" id="inputGroup-sizing-default">搜索文章</span>
                         </div>
-                        <input type="text" id="email" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" onkeypress="search()">
+                        <input type="text" id="playname_search" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" onkeypress="search()">
                     </div>
+                    <div class="btn-group mr-2">
+                        <button id="add" type="button" class="btn btn-sm btn-outline-secondary"  data-toggle="modal" data-target="#exampleModal">添加分享</button>   <!--模态框-->
+                    </div>
+                </div>
+            </div>
 
+            <div class="col-md-3"><!--第一列-->
+
+                <div class="col-md-12">
+                    <a href="" target="_blank">
+                        <div class="card mb-4 shadow-sm">
+                            <img src="img/18.jpg" alt="">
+                            <div class="card-body">
+                                <h6> json[i].name  </h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted"> json[i].kind  </small>
+
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-12">
+                    <a href="" target="_blank">
+                        <div class="card mb-4 shadow-sm">
+                            <img src="img/1.jpg" alt="">
+                            <div class="card-body">
+                                <h6> json[i].name  </h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted"> json[i].kind  </small>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-primary">购票</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-12">
+                    <a href="" target="_blank">
+                        <div class="card mb-4 shadow-sm">
+                            <img src="img/21.jpg" alt="">
+                            <div class="card-body">
+                                <h6> json[i].name  </h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted"> json[i].kind  </small>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-primary">购票</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
                 </div>
             </div>
-            <div class="table-responsive  animated bounceInUp">
-                <table class="table table-hover">
-                    <thead>
-                    <tr class="list_nav">
-                        <th>编号</th>
-                        <th>昵称</th>
-                        <th>电话号码</th>
-                        <th>注册邮箱</th>
-                        <th>密码</th>
-                        <th>操作</th>
-                    </tr>
-                    </thead>
-                    <tbody id="table">
-                    </tbody>
-                </table>
+
+            <div class="col-md-3"><!--第二列-->
+
+                <div class="col-md-12">
+                    <a href="" target="_blank">
+                        <div class="card mb-4 shadow-sm">
+                            <img src="img/1.jpg" alt="">
+                            <div class="card-body">
+                                <h6> json[i].name  </h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted"> json[i].kind  </small>
+
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-12">
+                    <a href="" target="_blank">
+                        <div class="card mb-4 shadow-sm">
+                            <img src="img/21.jpg" alt="">
+                            <div class="card-body">
+                                <h6> json[i].name  </h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted"> json[i].kind  </small>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-primary">购票</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-12">
+                    <a href="" target="_blank">
+                        <div class="card mb-4 shadow-sm">
+                            <img src="img/1.jpg" alt="">
+                            <div class="card-body">
+                                <h6> json[i].name  </h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted"> json[i].kind  </small>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-primary">购票</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
             </div>
+
+            <div class="col-md-3"><!--第三列-->
+
+                <div class="col-md-12">
+                    <a href="" target="_blank">
+                        <div class="card mb-4 shadow-sm">
+                            <img src="img/21.jpg" alt="">
+                            <div class="card-body">
+                                <h6> json[i].name  </h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted"> json[i].kind  </small>
+
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-12">
+                    <a href="" target="_blank">
+                        <div class="card mb-4 shadow-sm">
+                            <img src="img/wallhaven-j3339m_1920x1080.png" alt="">
+                            <div class="card-body">
+                                <h6> json[i].name  </h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted"> json[i].kind  </small>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-primary">购票</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-12">
+                    <a href="" target="_blank">
+                        <div class="card mb-4 shadow-sm">
+                            <img src="img/21.jpg" alt="">
+                            <div class="card-body">
+                                <h6> json[i].name  </h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted"> json[i].kind  </small>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-primary">购票</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="col-md-3"><!--第四列-->
+
+                <div class="col-md-12">
+                    <a href="" target="_blank">
+                        <div class="card mb-4 shadow-sm">
+                            <img src="img/wallhaven-8ok7vk_1920x1080.png" alt="">
+                            <div class="card-body">
+                                <h6> json[i].name  </h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted"> json[i].kind  </small>
+
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-12">
+                    <a href="" target="_blank">
+                        <div class="card mb-4 shadow-sm">
+                            <img src="img/1.jpg" alt="">
+                            <div class="card-body">
+                                <h6> json[i].name  </h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted"> json[i].kind  </small>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-primary">购票</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                <div class="col-md-12">
+                    <a href="" target="_blank">
+                        <div class="card mb-4 shadow-sm">
+                            <img src="img/21.jpg" alt="">
+                            <div class="card-body">
+                                <h6> json[i].name  </h6>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <small class="text-muted"> json[i].kind  </small>
+                                    <div class="btn-group">
+                                        <button type="button" class="btn btn-sm btn-primary">购票</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+
+            <footer class="text-center py-3 mt-5">
+                <div class="mx-auto col-md-12 " id="company">
+                    <p>版权所有 © @2021</p>
+                </div>
+                <div class="mx-auto col-md-12 " id="footer_right">
+                    <p class="col-xl-12">@2021-鱼尔Snn旅游文化有限公司</p>
+                </div>
+            </footer>
+
         </main>
-        <!--            删除警示-->
-        <div class="modal fade" id="delModal" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="delModalLabel">确认删除</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        请谨慎操作！！！确认删除该用户？
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-danger"  data-dismiss="modal" id="delConfirm">确认删除</button>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
 </div>
 <script src="js/Bootstrap/bootstrap.bundle.js"></script>
