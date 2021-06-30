@@ -14,7 +14,7 @@
     <script type="text/javascript">
 
         function search(){
-            var url = "../CustomerServlet";
+            var url = "CustomerServlet";
             if (window.XMLHttpRequest)
                 req = new XMLHttpRequest();
             else if (window.ActiveXObject)
@@ -62,7 +62,7 @@
 
             $("#delConfirm").click(function (){
 
-                var url = "../CustomerServlet";
+                var url = "CustomerServlet";
                 if (window.XMLHttpRequest)
                     req = new XMLHttpRequest();
                 else if (window.ActiveXObject)
@@ -141,33 +141,210 @@
         </nav>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4"><div class="chartjs-size-monitor"><div class="chartjs-size-monitor-expand"><div class=""></div></div><div class="chartjs-size-monitor-shrink"><div class=""></div></div></div>
-            <div class=" d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                <h1 class="h2">用户管理</h1>
-                <div class="btn-toolbar mb-2 mb-md-0">
-                    <div class="input-group mr-2">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text" id="inputGroup-sizing-default">搜索邮箱</span>
+            <div class="">
+                <div class=" d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+                    <h1 class="h2">智能推荐</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="input-group mr-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">搜索</span>
+                            </div>
+                            <input type="text" id="playname_search" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" onkeypress="search()">
                         </div>
-                        <input type="text" id="email" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" onkeypress="search()">
                     </div>
-
                 </div>
-            </div>
-            <div class="table-responsive  animated bounceInUp">
-                <table class="table table-hover">
-                    <thead>
-                    <tr class="list_nav">
-                        <th>编号</th>
-                        <th>昵称</th>
-                        <th>电话号码</th>
-                        <th>注册邮箱</th>
-                        <th>密码</th>
-                        <th>操作</th>
-                    </tr>
-                    </thead>
-                    <tbody id="table">
-                    </tbody>
-                </table>
+
+
+
+                <div class="animated fadeInUp">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <img src="img/wallhaven-8xl76y_1920x1080.png" alt="">
+                                <div class="card-body">
+                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
+                                        </div>
+                                        <small class="text-muted">9 分钟前</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <img src="img/wallhaven-odr58l_1920x1080.png" alt="">
+
+                                <div class="card-body">
+                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
+                                        </div>
+                                        <small class="text-muted">9 分钟前</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <img src="img/wallhaven-j3339m_1920x1080.png" alt="">
+                                <div class="card-body">
+                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
+                                        </div>
+                                        <small class="text-muted">9 分钟前</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <img src="img/wallhaven-wyrqq6_1920x1080.png" alt="">
+
+                                <div class="card-body">
+                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
+                                        </div>
+                                        <small class="text-muted">9 分钟前</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <img src="img/wallhaven-4ye5eg_1920x1080.png" alt="">
+                                <div class="card-body">
+                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
+                                        </div>
+                                        <small class="text-muted">9 分钟前</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <img src="img/wallhaven-z887yw_1920x1080.png" alt="">
+
+                                <div class="card-body">
+                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
+                                        </div>
+                                        <small class="text-muted">9 分钟前</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <img src="img/wallhaven-nkp3dm_1920x1080.png" alt="">
+                                <div class="card-body">
+                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
+                                        </div>
+                                        <small class="text-muted">9 分钟前</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <img src="img/wallhaven-gjwzke_1920x1080.png" alt="">
+
+                                <div class="card-body">
+                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
+                                        </div>
+                                        <small class="text-muted">9 分钟前</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <img src="img/wallhaven-nkp3dm_1920x1080.png" alt="">
+                                <div class="card-body">
+                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
+                                        </div>
+                                        <small class="text-muted">9 分钟前</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <img src="img/wallhaven-8xl76y_1920x1080.png" alt="">
+                                <div class="card-body">
+                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
+                                        </div>
+                                        <small class="text-muted">9 分钟前</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <img src="img/wallhaven-odr58l_1920x1080.png" alt="">
+
+                                <div class="card-body">
+                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
+                                        </div>
+                                        <small class="text-muted">9 分钟前</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <img src="img/wallhaven-j3339m_1920x1080.png" alt="">
+                                <div class="card-body">
+                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
+                                        </div>
+                                        <small class="text-muted">9 分钟前</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <footer class="text-center pt-3">
                 <div class="mx-auto col-md-12 " id="company">
@@ -178,26 +355,7 @@
                 </div>
             </footer>
         </main>
-        <!--            删除警示-->
-        <div class="modal fade" id="delModal" tabindex="-1" aria-labelledby="delModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="delModalLabel">确认删除</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        请谨慎操作！！！确认删除该用户？
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                        <button type="button" class="btn btn-danger"  data-dismiss="modal" id="delConfirm">确认删除</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
 </div>
 <script src="js/Bootstrap/bootstrap.bundle.js"></script>
