@@ -10,81 +10,11 @@
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="font-awesome-4.7.0/css/font-awesome.min.css">
     <script src="js/Bootstrap/jquery.js"></script>
-
-    <script type="text/javascript">
-
-        function search(){
-            var url = "CustomerServlet";
-            if (window.XMLHttpRequest)
-                req = new XMLHttpRequest();
-            else if (window.ActiveXObject)
-                req = new ActiveXObject("Microsoft.XMLHTTP");
-            if (req) {
-                //采用POST方式，异步传输
-                req.open("post", url, true);
-                //POST方式，必须加入如下头信息设定
-                req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                req.onreadystatechange = searchComplete;
-                req.send("type=search&method=search&name="+document.getElementById("email").value);
-            }
+    <style>
+        div.col-md-4{
+            cursor: pointer;
         }
-
-        function searchComplete() {
-            if (req.readyState == 4 && req.status == 200) {
-                var theTable = document.getElementById("table");//table的id
-                var num=theTable.rows.length;
-                while(num>0) {
-                    theTable.deleteRow(num-1);
-                    num=theTable.rows.length;
-                }
-                var json =  JSON.parse(req.responseText);//转换为json对象
-                for(i=0; i<json.length; i++) {
-                    var rowCount = theTable.rows.length; //获得当前表格的行数
-                    var row = theTable.insertRow(rowCount);//在tale里动态的增加tr
-                    row.insertCell(0).innerHTML = json[i].id;
-                    row.insertCell(1).innerHTML = json[i].name;
-                    row.insertCell(2).innerHTML = json[i].tel;
-                    row.insertCell(3).innerHTML = json[i].email;
-                    row.insertCell(4).innerHTML = json[i].pwd;
-                    row.insertCell(5).innerHTML = '<input type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#delModal" value="删除" onclick="del('+json[i].id+')" />';
-                }
-            }
-        }
-
-
-
-
-        function modify(a,b,c,d,e){
-            window.location="detail.html?type=update&id="+a+"&name="+encodeURIComponent(b)+"&rowCount="+c+"&colCount="+d+"&introduction="+encodeURIComponent(e);
-        }
-
-        function del(id){
-
-            $("#delConfirm").click(function (){
-
-                var url = "CustomerServlet";
-                if (window.XMLHttpRequest)
-                    req = new XMLHttpRequest();
-                else if (window.ActiveXObject)
-                    req = new ActiveXObject("Microsoft.XMLHTTP");
-                if (req) {
-                    //采用POST方式，异步传输
-                    req.open("post", url, true);
-                    //POST方式，必须加入如下头信息设定
-                    req.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-                    req.onreadystatechange = delComplete;
-                    req.send("type=delete&id="+id);
-                }
-            });
-        }
-        function delComplete() {
-            if (req.readyState == 4 && req.status == 200) {
-                if(req.responseText==1)
-                    search();
-            }
-        }
-
-    </script>
+    </style>
 
 
 </head>
@@ -162,13 +92,13 @@
                             <div class="card mb-4 shadow-sm">
                                 <img src="img/wallhaven-8xl76y_1920x1080.png" alt="">
                                 <div class="card-body">
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    <p class="card-text">傍晚的阳光金黄而辽远，四季交替却如此温情，你迟到了许多年，可我依然为你的到来而高兴，世界变换不停，热潮川流不息，我只想每个落日，身边都有你.</p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
                                             <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
                                         </div>
-                                        <small class="text-muted">9 分钟前</small>
+                                         
                                     </div>
                                 </div>
                             </div>
@@ -178,13 +108,13 @@
                                 <img src="img/wallhaven-odr58l_1920x1080.png" alt="">
 
                                 <div class="card-body">
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    <p class="card-text">天空偷喝了我放在屋顶的红酒，醉了臆想，红了脸颊，成了晚霞，偷看着这世间温柔的万物，想你的时候夕阳是你，晚霞是你，云中月是你，点点星辰也是你.</p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
                                             <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
                                         </div>
-                                        <small class="text-muted">9 分钟前</small>
+                                         
                                     </div>
                                 </div>
                             </div>
@@ -193,13 +123,13 @@
                             <div class="card mb-4 shadow-sm">
                                 <img src="img/wallhaven-j3339m_1920x1080.png" alt="">
                                 <div class="card-body">
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    <p class="card-text">云边有个小卖部，货架堆着岁月和夕阳，背后就是山。老人靠着躺椅假装睡着，小孩子偷走了一块糖。泪水几点钟落地，飞鸟要去向何方。人们聚和离，云朵来又往.</p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
                                             <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
                                         </div>
-                                        <small class="text-muted">9 分钟前</small>
+                                         
                                     </div>
                                 </div>
                             </div>
@@ -209,13 +139,13 @@
                                 <img src="img/wallhaven-wyrqq6_1920x1080.png" alt="">
 
                                 <div class="card-body">
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    <p class="card-text">和煦的阳光，透过稠密的树叶洒落下来，成了点点金色的光斑，天气晴朗，空气新鲜，生活有所期待，湖上泛着一片青烟似的薄雾，远望微山，只隐约辨出灰色的山影.</p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
                                             <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
                                         </div>
-                                        <small class="text-muted">9 分钟前</small>
+                                         
                                     </div>
                                 </div>
                             </div>
@@ -224,13 +154,13 @@
                             <div class="card mb-4 shadow-sm">
                                 <img src="img/wallhaven-4ye5eg_1920x1080.png" alt="">
                                 <div class="card-body">
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    <p class="card-text">阳光灿烂地过分，天也蓝得过分，他满意地看到一朵云从太阳面前飘过，湖水立刻从银色变成了灰色，云朵喝了我放在屋顶的酒，于是它脸红，变成了晚霞.</p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
                                             <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
                                         </div>
-                                        <small class="text-muted">9 分钟前</small>
+                                         
                                     </div>
                                 </div>
                             </div>
@@ -240,74 +170,13 @@
                                 <img src="img/wallhaven-z887yw_1920x1080.png" alt="">
 
                                 <div class="card-body">
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    <p class="card-text">我总爱跟你谈及宇宙温柔橘子汽水味的风和蓝色的落日，就像棋子落在棋盘上清脆的声，夹杂在夏日傍晚湿润的风里，正好撞上了每天都来的晚霞.</p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
                                             <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
                                         </div>
-                                        <small class="text-muted">9 分钟前</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card mb-4 shadow-sm">
-                                <img src="img/wallhaven-nkp3dm_1920x1080.png" alt="">
-                                <div class="card-body">
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
-                                        </div>
-                                        <small class="text-muted">9 分钟前</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card mb-4 shadow-sm">
-                                <img src="img/wallhaven-gjwzke_1920x1080.png" alt="">
-
-                                <div class="card-body">
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
-                                        </div>
-                                        <small class="text-muted">9 分钟前</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card mb-4 shadow-sm">
-                                <img src="img/wallhaven-nkp3dm_1920x1080.png" alt="">
-                                <div class="card-body">
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
-                                        </div>
-                                        <small class="text-muted">9 分钟前</small>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card mb-4 shadow-sm">
-                                <img src="img/wallhaven-8xl76y_1920x1080.png" alt="">
-                                <div class="card-body">
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                    <div class="d-flex justify-content-between align-items-center">
-                                        <div class="btn-group">
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
-                                            <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
-                                        </div>
-                                        <small class="text-muted">9 分钟前</small>
+                                         
                                     </div>
                                 </div>
                             </div>
@@ -315,15 +184,15 @@
                         <div class="col-md-4">
                             <div class="card mb-4 shadow-sm">
                                 <img src="img/wallhaven-odr58l_1920x1080.png" alt="">
-
+                        
                                 <div class="card-body">
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    <p class="card-text">天空偷喝了我放在屋顶的红酒，醉了臆想，红了脸颊，成了晚霞，偷看着这世间温柔的万物，想你的时候夕阳是你，晚霞是你，云中月是你，点点星辰也是你.</p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
                                             <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
                                         </div>
-                                        <small class="text-muted">9 分钟前</small>
+                        
                                     </div>
                                 </div>
                             </div>
@@ -332,13 +201,76 @@
                             <div class="card mb-4 shadow-sm">
                                 <img src="img/wallhaven-j3339m_1920x1080.png" alt="">
                                 <div class="card-body">
-                                    <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                                    <p class="card-text">云边有个小卖部，货架堆着岁月和夕阳，背后就是山。老人靠着躺椅假装睡着，小孩子偷走了一块糖。泪水几点钟落地，飞鸟要去向何方。人们聚和离，云朵来又往.</p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
                                             <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
                                             <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
                                         </div>
-                                        <small class="text-muted">9 分钟前</small>
+                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <img src="img/wallhaven-wyrqq6_1920x1080.png" alt="">
+                        
+                                <div class="card-body">
+                                    <p class="card-text">和煦的阳光，透过稠密的树叶洒落下来，成了点点金色的光斑，天气晴朗，空气新鲜，生活有所期待，湖上泛着一片青烟似的薄雾，远望微山，只隐约辨出灰色的山影.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
+                                        </div>
+                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <img src="img/wallhaven-odr58l_1920x1080.png" alt="">
+                        
+                                <div class="card-body">
+                                    <p class="card-text">天空偷喝了我放在屋顶的红酒，醉了臆想，红了脸颊，成了晚霞，偷看着这世间温柔的万物，想你的时候夕阳是你，晚霞是你，云中月是你，点点星辰也是你.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
+                                        </div>
+                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <img src="img/wallhaven-j3339m_1920x1080.png" alt="">
+                                <div class="card-body">
+                                    <p class="card-text">云边有个小卖部，货架堆着岁月和夕阳，背后就是山。老人靠着躺椅假装睡着，小孩子偷走了一块糖。泪水几点钟落地，飞鸟要去向何方。人们聚和离，云朵来又往.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
+                                        </div>
+                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="card mb-4 shadow-sm">
+                                <img src="img/wallhaven-wyrqq6_1920x1080.png" alt="">
+                        
+                                <div class="card-body">
+                                    <p class="card-text">和煦的阳光，透过稠密的树叶洒落下来，成了点点金色的光斑，天气晴朗，空气新鲜，生活有所期待，湖上泛着一片青烟似的薄雾，远望微山，只隐约辨出灰色的山影.</p>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">评论</button>
+                                            <button type="button" class="btn btn-sm btn-outline-secondary">点赞</button>
+                                        </div>
+                        
                                     </div>
                                 </div>
                             </div>
